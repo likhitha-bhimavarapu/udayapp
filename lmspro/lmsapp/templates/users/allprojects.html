@@ -1,0 +1,152 @@
+{% extends 'users/base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<title>Technologies</title>
+<head>
+    <style>
+    body{
+          background-color: rgb(237, 237, 237);
+        }
+        
+        .image-container a{
+        text-decoration: none;
+        
+       }
+       .image-container img{
+        border-radius:10px;
+       }
+    </style>
+
+</head>
+<body>
+<br><br>
+<div class=" container-fluid mt-5" style="text-decoration:underline rgb(30, 115, 235);">
+    <h2 class="text-center"><span style="color:rgb(30, 115, 235);"></span><b>Major Projects List</b></h2>
+</div>
+<br>
+<div class="container mx-3 mt-3">
+    <a href="/project_category/" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Categories
+    </a>
+</div>
+<div class="container-fluid mt-3 me-5">
+<div class="row">
+<div class="col-md-3">
+    <div class="image-container">
+    <a href="/ml/">
+<img style="margin-left:10px;" height="150px" width="270px" src="{% static 'images/ml.jpg'%}">
+<div class="image-details">
+    <p style="margin-left:10px;" class="mt-2"><b>ML Projects list</b> </p>
+    </a>
+</div>
+</div>
+</div>
+
+    <div class="col-md-3">
+    <div class="image-container">
+    <a href="/python/">
+<img height="150px" width="270px" src="{% static 'images/py.jpg'%}">
+<div class="image-details">
+  <p class="mt-2"><b>Python Projects list</b> </p>
+  </a> 
+    </div>
+  </div>
+    </div>
+
+    <div class="col-md-3">
+    <div class="image-container">
+    <a href="/react/">
+<img height="150px" width="270px" src="{% static 'images/react.png'%}">
+<div class="image-details">
+  <p class="mt-2"><b>React projects list</b> </p>
+  </a> 
+    </div>
+  </div>
+    </div>
+
+     <div class="col-md-3">
+       <div class="image-container">
+       <a href="/flask/">
+    <img height="150px" width="270px" src="{% static 'images/ai.jpg'%}">
+    <div class="image-details">
+     <p class="mt-2"><b>Flask projects list</b> </p>
+     </a>
+    </div>
+  </div>
+</div>
+</div>
+
+  <div class="container-fluid mt-5 me-5">
+<div class="row">
+<div class="col-md-3">
+    <div class="image-container">
+    <a href="/django/">
+<img height="150px" width="270px" src="{% static 'images/dja.png'%}">
+<div class="image-details">
+    <p class="mt-2"><b>Django Projects list</b> </p>
+    </a>
+</div>
+</div>
+</div>
+
+    <div class="col-md-3">
+    <div class="image-container">
+    <a href="/php/">
+<img height="150px" width="270px" src="{% static 'images/php.jpg'%}">
+<div class="image-details">
+  <p class="mt-2"><b>PHP Projects list</b> </p>
+  </a> 
+    </div>
+  </div>
+    </div>
+
+<div class="col-md-3">
+    <div class="image-container">
+    <a href="/aws/">
+<img height="150px" width="270px" src="{% static 'images/aws.avif'%}">
+<div class="image-details">
+    <p class="mt-2"><b>AWS Projects list</b> </p>
+    </a>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="image-container">
+<a href="/azure/">
+<img height="150px" width="270px" src="{% static 'images/azuree.jpg'%}">
+<div class="image-details">
+  <p class="mt-2"><b>AZURE Projects list</b> </p>
+  </a> 
+</div>
+</div>
+</div>
+</div>
+
+{% comment %} Profile Model View {% endcomment %}
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+       <h2>Welcome, {{ user.username }}</h2>
+       <p>Email: {{ user.email }}</p>
+     </div>
+     <div class="modal-footer">
+       <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+     </div>
+   </div>
+  </div>
+  </div>
+
+{% endblock %}
+
+</body>
+</html>

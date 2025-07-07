@@ -1,0 +1,92 @@
+{% extends "users/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block content %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Page styling */
+        body, html {
+            height: 100%;
+            margin: 0;
+          
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4b7bec, #a29bfe);
+            color: #fff;
+            text-align: center;
+        }
+
+        .content-box {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 90%;
+            margin-top:150px;
+            margin-left:250px;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: #d1d8e0;
+        }
+
+        a {
+            font-weight: 600;
+            color: #ffdd59;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #ffd32a;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-box">
+        <h2>We are currently working on this page. Once it's complete, we'll reach out to you!</h2>
+
+        <h4>Thank You!</h4>
+        <a href="/home/" class="btn btn-link">Back to Home</a>
+    </div>
+
+    {% comment %} Profile Model View {% endcomment %}
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+       <h2>Welcome, {{ user.username }}</h2>
+       <p>Email: {{ user.email }}</p>
+     </div>
+     <div class="modal-footer">
+       <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+     </div>
+   </div>
+  </div>
+  </div>
+{% endblock %}
+</body>
+</html>

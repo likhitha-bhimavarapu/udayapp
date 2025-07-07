@@ -1,0 +1,90 @@
+{% extends "users/base.html" %}
+{% block content %}
+
+<div class="container" style="margin-top:130px;">
+    <h2 class="text-center fw-bold text-primary mb-5">
+        <i class="bi bi-grid-fill me-2"></i>Project Categories
+    </h2>
+
+    <div class="row justify-content-center g-4">
+        <!-- Major Project Card -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-diagram-3-fill display-4 text-primary mb-3"></i>
+                    <h4 class="card-title fw-bold">Major Projects</h4>
+                    <p class="card-text text-muted">
+                        Dive into comprehensive, full-stack projects designed to solve real-world problems. 
+                        Our major projects include complete documentation, source code, and implementation guides.
+                        Perfect for final year students and professionals looking to build portfolio-worthy applications.
+                    </p>
+                    <ul class="text-start mb-3">
+                        <li>Complete end-to-end solutions</li>
+                        <li>Detailed technical documentation</li>
+                        <li>Multiple technology integrations</li>
+                        <li>Scalable architecture designs</li>
+                    </ul>
+                    <a href="/allprojects/" class="btn btn-primary mt-3 px-4">
+                        <i class="bi bi-folder2-open me-2"></i>View Major Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mini Project Card -->
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-lightning-fill display-4 text-success mb-3"></i>
+                    <h4 class="card-title fw-bold">Mini Projects</h4>
+                    <p class="card-text text-muted">
+                        Quick, focused projects to help you master specific concepts and technologies. 
+                        Ideal for beginners and intermediate learners looking to practice coding skills 
+                        or explore new technologies without extensive time commitment.
+                    </p>
+                    <ul class="text-start mb-3">
+                        <li>Single-concept focused implementations</li>
+                        <li>Quick setup and execution</li>
+                        <li>Ideal for skill demonstration</li>
+                        <li>Great for hackathons and interviews</li>
+                    </ul>
+                    <a href="/all_mini/" class="btn btn-success mt-3 px-4">
+                        <i class="bi bi-rocket-takeoff me-2"></i>View Mini Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h4 class="text-center mb-4 text-secondary">Which One Should You Choose?</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary"><i class="bi bi-check-circle-fill me-2"></i>Major Projects Are Best For:</h5>
+                            <ul>
+                                <li>Final year academic projects</li>
+                                <li>Building comprehensive portfolio pieces</li>
+                                <li>Learning full development lifecycle</li>
+                                <li>Understanding complex system design</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success"><i class="bi bi-check-circle-fill me-2"></i>Mini Projects Are Best For:</h5>
+                            <ul>
+                                <li>Quick skill demonstration</li>
+                                <li>Learning specific technologies</li>
+                                <li>Preparing for technical interviews</li>
+                                <li>Weekend coding challenges</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,274 @@
+{% extends "users/base.html"%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+  {% block content %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <title>Home</title>
+  
+    <style>
+    body{
+      overflow-x: hidden;
+    }
+   
+      .acce{
+        text-align: center;
+        
+      }
+      #adv{
+        text-align: center;
+      }
+      #idea{
+        background-color:rgb(244, 233, 233);
+        padding:15px;
+        border-radius:10px;
+      }
+      #back{
+        background-color: rgb(107, 166, 249);
+        padding:30px;
+        border-radius:10px;
+      }
+      #pay{
+       background-color:rgb(244, 233, 233);
+        text-align: center;
+        padding:25px;
+        border-radius:5px;
+        margin:50px 0px 50px 80px;
+
+      }
+      
+      #amount h4{
+        color:rgb(234, 65, 155);
+        font-weight: bold;
+      }
+      #pay a{
+        text-decoration:none;
+        background-color: rgb(227, 154, 36);
+        color:white;
+        padding:10px;
+        width:fit-content;
+        font-weight: bold;
+      }
+      #cash{
+        font-size:20px;
+      }
+      .bor{
+        border:3px 1px 1px 1px solid green;
+      }
+@media only screen and (max-width: 320px) {
+  #hoimg {
+    height: 260px;
+    width: fit-content;
+    margin-left: -80px;
+  }
+  #pay{
+    margin: 50px 0px 50px 0px;
+  }
+}
+
+@media only screen and (min-width: 376px) and (max-width: 426px) {
+  body {
+    background-color: lightblue;
+  }
+}
+.course{
+  width: fit-content;
+}
+.stream{
+  background-color:rgb(244, 206, 118);
+  padding: 15px;
+  width: fit-content;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.stream:hover{
+  background-color:rgb(243, 230, 131);
+}
+.stream a:hover{
+  background-color:rgb(243, 230, 131);
+}
+.edu{
+  text-align: center;
+}
+.adj{
+  text-align: center;
+  text-decoration: none;
+}
+.aa{
+  display:flex;
+  text-align: center;
+  gap:20px;
+}
+.bord{
+  background-color: rgb(107, 166, 249);
+  padding:10px;
+  border-radius: 10px;
+  color:white;
+}
+.bt a{
+  background-color: rgb(212, 227, 127);
+  padding:25px;
+  border-radius: 10px;
+  color:white;
+  text-decoration: none;
+  margin-top:20px;
+}
+</style>
+</head>
+<body>
+   
+
+<div class="row m-5">
+<div class="col-sm-6 mt-5">
+    <h1>Learning for Every Step of<span id="tex">  your Career </span></h1><br>
+    <p>Fulfil your aspirations and transform your life with one of India’s leading learning platforms.</p>
+    <br>
+    <div class="aa" >
+      <div class="bord" >
+        <h4>Thousands</h4>
+        <p>Of learners Empowered</p>
+      </div>
+      <div class="bord">
+        <h4>Top-Notch</h4>
+        <p>Academic Network</p>
+      </div>
+      <div class="bord">
+        <h4>Legacy</h4>
+        <p>Linkmein Group</p>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+    <div class="course col-md-6">
+    <br>
+      <span class="bt m-3"><a href="#"><b>Choose The Right Course</b></a><span>
+    </div>&emsp;
+    <div class="stream col-md-6">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <b>Choose Your Stream</b>
+         </a>
+         <ul class="dropdown-menu">
+           <li><a class="dropdown-item" href="#">CSE</a></li>
+           <li><a class="dropdown-item" href="#">ECE</a></li>
+           <li><a class="dropdown-item" href="#">CIVIL</a></li>
+           <li><a class="dropdown-item" href="#">EEE</a></li>
+           <li><a class="dropdown-item" href="#">MECHANICAL</a></li>
+           
+         </ul>
+    </div>
+  </div>
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <h2>Welcome, {{ user.username }}</h2>
+         <p>Email: {{ user.email }}</p>
+       </div>
+       <div class="modal-footer">
+         <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+       </div>
+     </div>
+    </div>
+    </div>
+</div>
+<div class="col-sm-6 mt-5">
+   <img id="hoimg" height="450px" width="600px" src="{% static 'images/grow.webp' %}">
+</div>
+</div>
+   <hr class="line">
+
+<div class="edu mt-5">
+  <h5 style="color: blue"><b>Top Category</b></h5>
+  <h1>Explore 1000+ Realtime Projects <br> With Documnentation</h1>
+  <p style="color: rgb(51, 133, 248);">You'll find something to spark your curiosity and enhance</p>
+</div>
+
+<div class="row align-items-center my-5 py-4">
+  <!-- Left Side Image (col-6) -->
+  <div class="col-md-6 mb-4 mb-md-0">
+    <img src="{% static 'images/academic.jpg' %}" alt="Academic Projects" class="img-fluid rounded shadow">
+  </div>
+  
+  <!-- Right Side Content (col-6) -->
+  <div class="col-md-6">
+    <h2 class="mb-4">Comprehensive Academic Projects</h2>
+    <p class="lead">
+      Our platform offers a wide range of academic projects with complete documentation, source code, 
+      and implementation guides. Designed to help students excel in their coursework, these projects 
+      cover various engineering disciplines and include real-world applications. Each project comes with 
+      detailed explanations, making it easier to understand complex concepts and implement them 
+      successfully in your academic work.
+    </p>
+    <a href="/allprojects/" class="btn btn-primary mt-3">
+      Explore Projects <i class="fas fa-arrow-right ms-2"></i>
+    </a>
+  </div>
+</div>
+
+
+<div class="acce mt-5">
+  <h1 style="color: rgb(57, 136, 248);"><b>Invest in your career with Linkmein Study hub</b></h1>
+  <p>Get access to videos in over 90% of courses, Specialization, and professional certificates taught by <br> top instructors from leading Universities and Companys.</p>
+</div>
+
+<div class="container mt-5" id="idea">
+  <div class="row" id="adv">
+    <div class="col-md-3">
+      <img height="100px"  src="{% static 'images/lear1.png' %}">
+      <h5>Learn Anything</h5>
+      <p>Explore any interest or trending topic, take prerequisites, and advance your skills</p>
+    </div>
+
+     <div class="col-md-3">
+      <img height="100px"  src="{% static 'images/save1.png' %}">
+      <h5>Save Money</h5>
+      <p>Spend less money on your learning if you plan to take multiple courses this year</p>
+    </div>
+
+     <div class="col-md-3">
+      <img height="100px"  src="{% static 'images/learn1.png' %}">
+      <h5>Flexible Learning</h5>
+      <p>Learn at your own pace, move between multiple courses, or switch to a different course</p>
+    </div>
+
+     <div class="col-md-3">
+      <img height="100px"  src="{% static 'images/cert1.png' %}">
+      <h5>Unlimited Certificates</h5>
+      <p>Earn a certificate for every learning program that you complete at no additional cost</p>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container mt-5" id="back">
+<div class="row" >
+<div class="col-md-6">
+  <h1>Connect with us</h1>
+  <p>Just share your details and we will contact you at your convenience.</p>
+  <a style="text-decoration:none; color:white; background-color:rgb(66, 66, 244); padding:10px; border-radius:5px;" href="/contact/">Request a Callback <i class="fa-solid fa-angle-right"></i></a>
+</div>
+  <div class="col-md-6">
+    <img class="mx-5" height="200px" src="{% static 'images/call.png' %}">
+  </div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
+</body>
+</html>

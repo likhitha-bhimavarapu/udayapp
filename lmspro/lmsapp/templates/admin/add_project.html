@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #6c63ff;
+            --secondary-color: #f8f9fa;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding-top: 2rem;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            margin: 0 auto;
+        }
+        
+        .form-header {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .form-header h2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(108, 99, 255, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a52e0;
+        }
+        
+        .form-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .input-group-text {
+            background-color: #f8f9fa;
+        }
+        
+        .row-gap {
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .back-btn {
+                position: static;
+                transform: none;
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+            
+            .form-header {
+                text-align: center;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent form submission for demonstration
+
+            // Show success alert
+            alert("Project added successfully");
+
+            // Submit form after alert
+            event.target.submit();
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-container">
+        <div class="form-header">
+            <a href="/admindashboard/" class="btn btn-outline-secondary back-btn">
+                <i class="bi bi-arrow-left"></i> Dashboard
+            </a>
+            <h2><i class="bi bi-folder-plus"></i> Add New Project</h2>
+        </div>
+        
+        <form method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+            {% csrf_token %}
+            
+            <div class="row row-gap">
+                <!-- Project Name -->
+                <div class="col-md-6 mb-3">
+                    <label for="project_name" class="form-label">Project Name</label>
+                    <input type="text" class="form-control" name="project_name" id="project_name" placeholder="Enter project name" required>
+                </div>
+                
+                <!-- Category Selection -->
+                <div class="col-md-6 mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" name="category" id="category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="ML">Machine Learning</option>
+                        <option value="Python">Python</option>
+                        <option value="Django">Django</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Azure">Azure</option>
+                        <option value="AWS">AWS</option>
+                        <option value="Flask">Flask</option>
+                        <option value="React">React</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="row row-gap">
+                <!-- Project PDF Upload -->
+                <div class="col-md-6 mb-3">
+                    <label for="project_pdf" class="form-label">Project PDF</label>
+                    <input type="file" class="form-control" name="project_pdf" id="project_pdf" accept=".pdf" required>
+                    <div class="form-text">Upload project documentation (PDF)</div>
+                </div>
+                
+                <!-- Project ZIP Upload -->
+                <div class="col-md-6 mb-3">
+                    <label for="project_zip" class="form-label">Project Files (ZIP)</label>
+                    <input type="file" class="form-control" name="project_zip" id="project_zip" accept=".zip" required>
+                    <div class="form-text">Upload project source files (ZIP)</div>
+                </div>
+            </div>
+            
+            <div class="row row-gap">
+                <!-- Amount -->
+                <div class="col-md-6 mb-3">
+                    <label for="amount" class="form-label">Project Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₹</span>
+                        <input type="number" class="form-control" name="amount" id="amount" placeholder="Enter amount" required step="0.01" min="0">
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+    <label for="project_type" class="form-label">Project Type</label>
+    <select class="form-select" name="project_type" id="project_type" required>
+        <option value="" disabled selected>Select Project Type</option>
+        <option value="Mini Project">Mini Project</option>
+        <option value="Major Project">Major Project</option>
+    </select>
+</div>
+                
+                <!-- Additional field can be added here if needed -->
+                <div class="col-md-6 mb-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-plus-circle"></i> Add Project
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

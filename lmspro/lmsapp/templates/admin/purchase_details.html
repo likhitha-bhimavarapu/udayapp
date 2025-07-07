@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Purchase Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #f8f9fc;
+            --accent-color: #2e59d9;
+            --success-color: #1cc88a;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .header-container {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-top: 1rem;
+        }
+        
+        .page-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .back-btn {
+            position: absolute;
+            right: 15px;
+            top: 0;
+        }
+        
+        .card-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .search-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding-left: 2.5rem;
+        }
+        
+        .search-box .bi-search {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .table thead th {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            border-bottom: none;
+            vertical-align: middle;
+            padding: 1rem;
+            cursor: pointer;
+        }
+        
+        .table thead th:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .table tbody tr {
+            transition: all 0.15s ease;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(78, 115, 223, 0.05);
+            transform: translateY(-1px);
+        }
+        
+        .amount-cell {
+            font-weight: 600;
+            color: var(--success-color);
+        }
+        
+        .empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .pagination .page-link {
+            color: var(--primary-color);
+        }
+        
+        .sort-icon {
+            margin-left: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                text-align: center;
+            }
+            
+            .back-btn {
+                position: static;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                display: inline-block;
+            }
+            
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+    <div class="header-container">
+        <h2 class="page-title"><i class="bi bi-cart-check-fill me-2"></i>Purchase Details</h2>
+        <a href="/admindashboard/" class="btn btn-warning back-btn">
+            <i class="bi bi-arrow-left-circle me-1"></i> Back to Dashboard
+        </a>
+    </div>
+    
+    <div class="card-container">
+        <!-- Search Box -->
+        <div class="search-container">
+            <div class="row justify-content-end">
+                <div class="col-md-4">
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="orderIdSearch" class="form-control" placeholder="Search by Order ID...">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover align-middle" id="purchasesTable">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Email</th>                
+                        <th>Project Name</th>  
+                        <th>Amount (₹)</th>   
+                        <th>Order ID</th>
+                        <th>Payment ID</th>
+                        <th onclick="sortTable('created_at')">
+                            Purchased Time
+                            <i class="bi bi-arrow-down-up sort-icon"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if purchases %}
+                        {% for purchase in purchases|dictsortreversed:"created_at" %}
+                        <tr>
+                            <td>{{ purchase.user.id }}</td>
+                            <td>{{ purchase.user.username }}</td>
+                            <td>{{ purchase.user.email }}</td>
+                            <td>{{ purchase.project.project_name }}</td>
+                            <td class="amount-cell">₹{{ purchase.project.amount|floatformat:2 }}</td>
+                            <td class="order-id"><code>{{ purchase.order_id }}</code></td>
+                            <td><code>{{ purchase.razorpay_payment_id }}</code></td>
+                            <td>{{ purchase.created_at|date:"Y-m-d H:i:s" }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="empty-message">No purchases found.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        <nav aria-label="Purchase pagination">
+            <ul class="pagination justify-content-center mt-4">
+                {% if purchases.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ purchases.previous_page_number }}" aria-label="Previous">
+                        <i class="bi bi-chevron-left"></i> Previous
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link"><i class="bi bi-chevron-left"></i> Previous</span>
+                </li>
+                {% endif %}
+                
+                {% for num in purchases.paginator.page_range %}
+                    {% if purchases.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% elif num > purchases.number|add:"-3" and num < purchases.number|add:"3" %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if purchases.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ purchases.next_page_number }}" aria-label="Next">
+                        Next <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Next <i class="bi bi-chevron-right"></i></span>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Search functionality for Order ID
+    document.getElementById('orderIdSearch').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#purchasesTable tbody tr');
+        
+        rows.forEach(row => {
+            const orderId = row.querySelector('.order-id').textContent.toLowerCase();
+            if (orderId.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+    
+    // Simple client-side sorting (for demo purposes)
+    // In a real application, you would want server-side sorting
+    function sortTable(column) {
+        const table = document.getElementById('purchasesTable');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        rows.sort((a, b) => {
+            const aValue = a.cells[7].textContent; // Purchased Time is in column 8 (0-indexed)
+            const bValue = b.cells[7].textContent;
+            return new Date(bValue) - new Date(aValue); // Sort by newest first
+        });
+        
+        // Clear existing rows
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
+        }
+        
+        // Add sorted rows
+        rows.forEach(row => tbody.appendChild(row));
+    }
+    
+    // Initial sort by purchase time (newest first)
+    document.addEventListener('DOMContentLoaded', function() {
+        sortTable('created_at');
+    });
+</script>
+</body>
+</html>

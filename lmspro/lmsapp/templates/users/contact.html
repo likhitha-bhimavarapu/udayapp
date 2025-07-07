@@ -1,0 +1,252 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Request a Callback</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        .callback-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .benefit-icon {
+            background-color: #0d6efd;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        /* Rest of your existing styles... */
+    </style>
+</head>
+<body>
+<br><br><br><br><br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Hero Section with Introduction -->
+            <div class="hero-section text-center">
+                <h1 class="display-5 fw-bold text-primary mb-4">We're Here to Help</h1>
+                <p class="lead mb-4">Have questions about our services? Need technical support? Our expert team is ready to assist you with personalized guidance.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <span class="badge bg-primary rounded-pill px-3 py-2">
+                        <i class="fas fa-clock me-1"></i> 24/7 Availability
+                    </span>
+                    <span class="badge bg-success rounded-pill px-3 py-2">
+                        <i class="fas fa-check-circle me-1"></i> Expert Support
+                    </span>
+                    <span class="badge bg-info rounded-pill px-3 py-2">
+                        <i class="fas fa-lock me-1"></i> Secure Communication
+                    </span>
+                </div>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h3 class="h4 mb-4">Why request a callback?</h3>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div>
+                            <h5 class="h6 mb-1">Personalized Assistance</h5>
+                            <p class="small text-muted mb-0">Get one-on-one support tailored to your specific needs.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        
+                        <div>
+                            <h5 class="h6 mb-1">Quick Response</h5>
+                            <p class="small text-muted mb-0">We typically respond within 1 hour.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                <br><br><br>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div>
+                            <h5 class="h6 mb-1">Expert Advice</h5>
+                            <p class="small text-muted mb-0">Our certified professionals will guide you.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div>
+                            <h5 class="h6 mb-1">No Obligation</h5>
+                            <p class="small text-muted mb-0">The consultation is completely free of charge.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Callback Form Section -->
+            <div class="callback-container">
+                <div class="text-center mb-5">
+                    <h2 class="callback-heading">Request Your Callback</h2>
+                    <p class="text-muted">Fill out the form below and we'll get back to you as soon as possible</p>
+                </div>
+                
+                <form method="POST" onsubmit="return showAlert()">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label for="name" class="form-label">Full Name</label>
+                            <div class="input-icon">
+                                <input type="text" id="name" name="name" class="form-control" required 
+                                       placeholder="Enter your full name">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="input-icon">
+                                <input type="email" id="email" name="email" class="form-control" required 
+                                       placeholder="Enter your email">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="mobile" class="form-label">Mobile Number</label>
+                        <div class="input-icon">
+                            <input type="tel" id="mobile" name="mobile" class="form-control" required 
+                                   placeholder="Enter your mobile number">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="message" class="form-label">How Can We Help You?</label>
+                        <textarea id="message" name="message" class="form-control" rows="5" required 
+                                  placeholder="Tell us about your project or question"></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-custom btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i> Submit Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="flex-shrink-0">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 60px; height: 60px; font-size: 24px;">
+                            {{ user.username|first|upper }}
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h4 class="mb-1">{{ user.username }}</h4>
+                        <p class="text-muted mb-0">{{ user.email }}</p>
+                    </div>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-user-cog me-2 text-primary"></i> Account Settings
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-history me-2 text-primary"></i> Request History
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-question-circle me-2 text-primary"></i> Help Center
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'logout' %}" class="btn btn-danger">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showAlert() {
+        Swal.fire({
+            title: 'Thank You!',
+            text: 'Our team will contact you shortly.',
+            icon: 'success',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+                setTimeout(() => {
+                    window.location.href = "/home/";
+                }, 3000);
+            }
+        });
+        return true;
+    }
+
+    // Add input masking for phone number
+    document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('mobile');
+        phoneInput.addEventListener('input', function(e) {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+    });
+</script>
+
+<!-- Include SweetAlert2 for beautiful alerts -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+{% endblock %}

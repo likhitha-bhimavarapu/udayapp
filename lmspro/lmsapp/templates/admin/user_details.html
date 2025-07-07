@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #f8f9fc;
+            --accent-color: #2e59d9;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        .user-container {
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            border-bottom: none;
+            border-radius: 0.35rem 0.35rem 0 0 !important;
+            padding: 1rem 1.35rem;
+        }
+        
+        .table thead th {
+            border-bottom: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            color: white;
+            background-color: var(--accent-color);
+        }
+        
+        .table tbody tr {
+            transition: all 0.15s ease;
+        }
+        
+        .table tbody tr:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        
+        .badge-active {
+            background-color: #1cc88a;
+        }
+        
+        .badge-inactive {
+            background-color: #e74a3b;
+        }
+        
+        .sortable:hover {
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box .form-control {
+            padding-left: 2.5rem;
+            border-radius: 0.35rem;
+        }
+        
+        .search-box .bi-search {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #d1d3e2;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .pagination .page-link {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container user-container">
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold">USER DETAILS</h6>
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" class="form-control" placeholder="Search users..." id="userSearch">
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="userTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-sort="username">#</th>
+                            <th class="sortable" data-sort="username">Username <i class="bi bi-arrow-down-up"></i></th>
+                            <th class="sortable" data-sort="email">Email <i class="bi bi-arrow-down-up"></i></th>
+                            <th>Mobile Number</th>
+                            <th class="sortable" data-sort="date_joined">Date Joined <i class="bi bi-arrow-down-up"></i></th>
+                            <th class="sortable" data-sort="last_login">Last Login <i class="bi bi-arrow-down-up"></i></th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for users in user|dictsortreversed:"date_joined" %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar mr-2">
+                                        <div class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center" style="width: 35px; height: 35px;">
+                                            {{ users.username|first|upper }}
+                                        </div>
+                                    </div>
+                                    <span>{{ users.username }}</span>
+                                </div>
+                            </td>
+                            <td>{{ users.email }}</td>
+                            <td>{{ users.userprofile.mobile_number }}</td>
+                            <td>{{ users.date_joined|date:"M d, Y" }}</td>
+                            <td>
+                                {% if users.last_login %}
+                                    {{ users.last_login|timesince }} ago
+                                {% else %}
+                                    Never logged in
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if users.is_active %}
+                                    <span class="badge badge-active rounded-pill">Active</span>
+                                {% else %}
+                                    <span class="badge badge-inactive rounded-pill">Inactive</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">No users available.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <div class="text-muted">
+                    Showing <span class="font-weight-bold">1</span> to <span class="font-weight-bold">10</span> of <span class="font-weight-bold">25</span> entries
+                </div>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-3">
+        <a href="/admindashboard/" class="btn btn-primary">
+            <i class="bi bi-arrow-left-circle"></i> Back to Dashboard
+        </a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Simple search functionality
+    document.getElementById('userSearch').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#userTable tbody tr');
+        
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchValue) ? '' : 'none';
+        });
+    });
+    
+    // Simple sorting functionality
+    document.querySelectorAll('.sortable').forEach(header => {
+        header.addEventListener('click', function() {
+            const sortBy = this.dataset.sort;
+            const icon = this.querySelector('i');
+            const isAsc = icon.classList.contains('bi-arrow-up');
+            
+            // Reset all icons
+            document.querySelectorAll('.sortable i').forEach(i => {
+                i.classList.remove('bi-arrow-up', 'bi-arrow-down');
+                i.classList.add('bi-arrow-down-up');
+            });
+            
+            // Set current icon
+            if (isAsc) {
+                icon.classList.remove('bi-arrow-up');
+                icon.classList.add('bi-arrow-down');
+            } else {
+                icon.classList.remove('bi-arrow-down');
+                icon.classList.add('bi-arrow-up');
+            }
+            
+            // In a real app, you would make an AJAX call to sort the data
+            // For this example, we'll just simulate it
+            console.log(`Sorting by ${sortBy} in ${isAsc ? 'descending' : 'ascending'} order`);
+        });
+    });
+</script>
+</body>
+</html>

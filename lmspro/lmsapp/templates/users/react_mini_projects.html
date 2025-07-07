@@ -1,0 +1,102 @@
+{% extends "users/base.html" %}
+{% block content %}
+
+<div style="margin-top:130px">
+<div class="container my-5">
+    <h2 class="text-center mb-4 text-success fw-bold">
+        <i class="fas fa-leaf text-success me-2"></i>React Mini Projects
+    </h2>
+    <div class="table-responsive rounded-3 shadow-sm">
+        <table class="table table-hover align-middle">
+            <thead class="table-success">
+                <tr>
+                    <th scope="col" class="ps-4 py-3">Project Name</th>
+                    <th scope="col" class="py-3">Project PDF</th>
+                    <th scope="col" class="py-3">Project ZIP</th>
+                    <th scope="col" class="py-3">Amount</th>
+                    <th scope="col" class="pe-4 py-3">Payment Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <td class="ps-4 fw-medium">{{ project.project_name }}</td>
+                        <td>
+                            {% if project.project_pdf %}
+                                <a href="{{ project.project_pdf.url }}" target="blank" class="btn btn-primary btn-sm px-3">
+                                    <i class="fas fa-file-pdf me-1"></i> Download PDF
+                                </a>
+                            {% else %}
+                                <span class="text-muted small">No PDF available</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if project.serial_number in purchased_projects %}
+                                {% if project.project_zip %}
+                                    <a href="{{ project.project_zip.url }}" class="btn btn-success btn-sm px-3">
+                                        <i class="fas fa-file-archive me-1"></i> Download ZIP
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted small">No ZIP available</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="text-muted small" style="cursor: not-allowed;">
+                                    <i class="fas fa-lock me-1"></i> Download ZIP (Payment Required)
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="fw-bold text-success">{{ project.amount }} INR</td>
+                        <td class="pe-4">
+                            {% if project.serial_number not in purchased_projects %}
+                                <form method="POST" action="{% url 'initiate_payment' project.serial_number %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning btn-sm px-3">
+                                        <i class="fas fa-credit-card me-1"></i> Pay Now
+                                    </button>
+                                </form>
+                            {% else %}
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 py-2 px-3">
+                                    <i class="fas fa-check-circle me-1"></i> Purchased
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header bg-success text-white">
+       <h5 class="modal-title" id="profileModalLabel">
+           <i class="fas fa-user-circle me-2"></i>Profile Details
+       </h5>
+       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+       <div class="d-flex align-items-center mb-3">
+           <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+               {{ user.username|first|upper }}
+           </div>
+           <div>
+               <h4 class="mb-0">{{ user.username }}</h4>
+               <p class="text-muted mb-0">{{ user.email }}</p>
+           </div>
+       </div>
+     </div>
+     <div class="modal-footer">
+       <a href="{% url 'logout' %}" class="btn btn-danger">
+           <i class="fas fa-sign-out-alt me-1"></i> Logout
+       </a>
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+     </div>
+   </div>
+  </div>
+</div>
+
+{% endblock %}

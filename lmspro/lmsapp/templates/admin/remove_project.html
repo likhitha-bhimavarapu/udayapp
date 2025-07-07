@@ -1,0 +1,11 @@
+<h2>Remove Project</h2>
+<form method="POST" action="{% url 'remove_project' %}">
+    {% csrf_token %}
+    <label for="serial_number">Enter Project Serial Number to Remove:</label>
+    <input type="text" name="serial_number" id="serial_number" required>
+    <button type="submit">Remove Project</button>
+</form>
+
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}

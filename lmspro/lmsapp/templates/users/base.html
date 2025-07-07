@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="{% static 'images/linkmein.png' %}">
+    <style>
+        #faq-chatbot {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 320px;
+    max-height: 450px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 40px; /* closed state height */
+    z-index: 10000;
+  }
+  #faq-chatbot.open {
+    max-height: 450px; /* open state height */
+  }
+  #faq-chatbot header {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #faq-chatbot header h4 {
+    margin: 0;
+    font-size: 18px;
+  }
+  #faq-chatbot header .toggle-btn {
+    font-size: 20px;
+    user-select: none;
+  }
+  #faq-chatbot .chat-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+  }
+  #faq-chatbot .faq-question {
+    background: #f1f1f1;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  #faq-chatbot .faq-answer {
+    margin: 0 0 15px 10px;
+    padding-left: 10px;
+    border-left: 3px solid #007bff;
+    color: #333;
+  }
+  #faq-chatbot input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 8px 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  #faq-chatbot button.ask-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin-top: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  #faq-chatbot .no-answer {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  /* Updated Navbar Styles */
+  .navbar-custom {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+  }
+  .navbar-brand {
+    background-color: rgba(96, 162, 232, 0.1);
+    padding: 5px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  .navbar-brand:hover {
+    background-color: rgba(96, 162, 232, 0.2);
+  }
+  .navbar-custom .nav-link {
+    color: #4a5568;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+  }
+  .navbar-custom .nav-link:hover {
+    color: rgb(96, 162, 232);
+    background-color: rgba(96, 162, 232, 0.05);
+  }
+  .navbar-custom .dropdown-menu {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 8px;
+  }
+  .navbar-custom .dropdown-item {
+    padding: 8px 16px;
+  }
+  .navbar-custom .dropdown-item:hover {
+    background-color: rgba(96, 162, 232, 0.1);
+    color: rgb(96, 162, 232);
+  }
+  
+  /* Updated Footer Styles */
+  .footer-custom {
+    background-color: #f8fafc !important;
+    color: #4a5568;
+    border-top: 1px solid #e2e8f0;
+  }
+  .footer-custom a {
+    color: #4a5568;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-custom a:hover {
+    color: rgb(96, 162, 232);
+  }
+  .footer-custom h5 {
+    color: #2d3748;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .footer-custom .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: #e2e8f0;
+    border-radius: 50%;
+    margin-right: 8px;
+    color: #4a5568;
+    transition: all 0.2s ease;
+  }
+  .footer-custom .social-icons a:hover {
+    background-color: rgba(96, 162, 232, 0.1);
+    color: rgb(96, 162, 232);
+  }
+  .footer-custom .list-unstyled li {
+    margin-bottom: 0.5rem;
+  }
+  .footer-custom .text-muted {
+    color: #718096 !important;
+  }
+    </style>
+</head>
+<body>
+    <!-- Updated Header -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top py-2">
+        <div class="container">
+            <a class="navbar-brand" href="/home/">
+                <img height="50px" src="{% static 'images/linkmein.png' %}" alt="LinkMeIn Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/">Home</a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
+                            Projects by Tech
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/project_category/">Python</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">PHP</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">Machine Learning</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">Django</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">Azure</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">React</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">Flask</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">AWS</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown">
+                            Projects by Stream
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/project_category/">M.Tech</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">MBA</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">MCA</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">B com</a></li>
+                            <li><a class="dropdown-item" href="/project_category/">B.Tech</a></li>
+                        
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact/">Contact us</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/feedback/">Feedback</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about/">About</a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/my-orders/">My Orders</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex">
+                    <a href="/#/" class="btn btn-outline-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chatbot Toggle Button -->
+    <div id="chatbot-toggle" style="position: fixed; bottom: 10px; right: 10px; z-index: 9999;">
+        <button onclick="toggleChat()" id="toggle-btn" class="btn btn-outline-primary shadow rounded-pill px-3 d-flex align-items-center gap-2">
+            <span id="toggle-label">💬 Chat with us</span>
+            <span id="toggle-arrow">⬆️</span>
+        </button>
+    </div>
+
+    <!-- Chatbot Box -->
+    <div id="chatbox" style="
+        display: none; 
+        position: fixed; 
+        bottom: 70px; 
+        right: 10px; 
+        width: 320px; 
+        height: 450px; 
+        background: white; 
+        border-radius: 12px; 
+        border: 1px solid #ccc; 
+        box-shadow: 0 0 12px rgba(0,0,0,0.2); 
+        z-index: 9999; 
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    ">
+        <div style="background: linear-gradient(to right, #6a11cb,rgb(22, 91, 128)); color: white; padding: 12px; font-weight: bold;">
+            🎓 Project Chatbot
+        </div>
+        <div id="chatlog" style="padding: 10px; height: 340px; overflow-y: auto; font-size: 14px;"></div>
+        <div style="display: flex; border-top: 1px solid #ccc;">
+            <input type="text" id="chatInput" placeholder="Ask something..." style="flex: 1; padding: 8px; border: none;" onkeydown="handleKey(event)">
+            <button onclick="sendMessage()" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+
+    <audio id="notify-sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Updated Footer -->
+    <footer class="footer-custom py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Column 1 -->
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="mb-3">LinkMeIn</h5>
+                    <p class="text-muted">
+                        We provide quality services to make your life easier and more productive.
+                    </p>
+                </div>
+                
+                <!-- Column 2 -->
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="mb-3">Projects</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/ml/">ML</a></li>
+                        <li><a href="/python/">Python</a></li>
+                        <li><a href="/aws/">AWS</a></li>
+                        <li><a href="/azure/">Azure</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="mb-3">Useful Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/home/">Home</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/contact/">Contact Us</a></li>
+                        <li><a href="/feedback/">Feedback</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="mb-3">Contact</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><i class="fas fa-home me-2"></i> Ameerpet, Hyd, Telangana</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> linkmein@co.in</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +01 234 567 88</li>
+                        <li class="mb-2"><i class="fas fa-print me-2"></i> +01 234 567 89</li>
+                    </ul>
+                </div>
+                
+                <!-- Column 5 - Social Media -->
+                <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="mb-3">Follow us</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-google"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4" style="border-color: #e2e8f0;">
+            
+            <div class="row align-items-center">
+                <div class="col-md-7 text-center text-md-start">
+                    <p class="text-muted small mb-0">© 2023 LinkMeIn. All rights reserved.</p>
+                </div>
+                <div class="col-md-5 text-center text-md-end">
+                    <a href="#" class="text-muted small me-3">Privacy Policy</a>
+                    <a href="#" class="text-muted small me-3">Terms of Service</a>
+                    <a href="#" class="text-muted small">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    function toggleChat() {
+        const chatbox = document.getElementById("chatbox");
+        const arrow = document.getElementById("toggle-arrow");
+
+        if (chatbox.style.display === "none") {
+            chatbox.style.display = "block";
+            chatbox.style.opacity = "0";
+            setTimeout(() => chatbox.style.opacity = "1", 50);
+            arrow.textContent = "⬇️";
+        } else {
+            chatbox.style.opacity = "0";
+            setTimeout(() => {
+                chatbox.style.display = "none";
+            }, 300);
+            arrow.textContent = "⬆️";
+        }
+    }
+
+    function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+        if (!message) return;
+
+        const chatlog = document.getElementById("chatlog");
+        chatlog.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
+
+        fetch("/chatbot-api/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie('csrftoken')
+            },
+            body: JSON.stringify({ message })
+        })
+        .then(res => res.json())
+        .then(data => {
+            chatlog.innerHTML += `<div><strong>Bot:</strong> ${data.response}</div>`;
+            document.getElementById("notify-sound").play();
+            chatlog.scrollTop = chatlog.scrollHeight;
+        });
+
+        input.value = "";
+    }
+
+    function handleKey(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+</body>
+</html>

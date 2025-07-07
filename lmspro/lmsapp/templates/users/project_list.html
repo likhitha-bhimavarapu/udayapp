@@ -1,0 +1,78 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="container my-4">
+    <h2 class="text-center">Project List</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Serial Number</th>
+                    <th scope="col">Project Name</th>
+                    <th scope="col">Project PDF</th>
+                    <th scope="col">Project ZIP</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Payment Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <td>{{ project.serial_number }}</td>
+                        <td>{{ project.project_name }}</td>
+                        <td>
+                            {% if project.project_pdf %}
+                                <a href="{{ project.project_pdf.url }}" class="btn btn-primary btn-sm">Download PDF</a>
+                            {% else %}
+                                <span class="text-muted">No PDF available</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if project.serial_number in purchased_projects %}
+                                {% if project.project_zip %}
+                                    <a href="{{ project.project_zip.url }}" class="btn btn-success btn-sm">Download ZIP</a>
+                                {% else %}
+                                    <span class="text-muted">No ZIP available</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="text-muted" style="cursor: not-allowed;">Download ZIP (Payment Required)</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ project.amount }} INR</td>
+                        <td>
+                            {% if project.serial_number not in purchased_projects %}
+                                <form method="POST" action="{% url 'initiate_payment' project.serial_number %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning btn-sm">Pay Now</button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-secondary btn-sm" disabled>Purchased</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% comment %} Profile Model View {% endcomment %}
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     </div>
+     <div class="modal-body">
+       <h2>Welcome, {{ user.username }}</h2>
+       <p>Email: {{ user.email }}</p>
+     </div>
+     <div class="modal-footer">
+       <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+     </div>
+   </div>
+  </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

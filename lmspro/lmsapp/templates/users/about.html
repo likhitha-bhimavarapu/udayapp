@@ -1,0 +1,378 @@
+{% extends "users/base.html" %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - LinkMeIn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --accent-color: #20c997;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin-top: 120px;
+            background-color: #f8f9fa;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 60px 0;
+            margin-bottom: 50px;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .about-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+            background: white;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .team-member {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .stats-item {
+            text-align: center;
+            padding: 30px 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 4px solid white;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .testimonial-card:after {
+            content: '"';
+            position: absolute;
+            font-size: 80px;
+            color: rgba(13, 110, 253, 0.1);
+            top: 10px;
+            right: 30px;
+            line-height: 1;
+        }
+        
+        .client-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-4">About LinkMeIn</h1>
+        <p class="lead mb-4">Empowering businesses through innovative technology solutions and exceptional training services</p>
+        <div class="d-flex justify-content-center gap-3">
+            <span class="badge bg-primary rounded-pill px-3 py-2">
+                <i class="fas fa-check-circle me-1"></i> Trusted Since 2010
+            </span>
+            <span class="badge bg-success rounded-pill px-3 py-2">
+                <i class="fas fa-users me-1"></i> 200+ Clients
+            </span>
+            <span class="badge bg-info rounded-pill px-3 py-2">
+                <i class="fas fa-project-diagram me-1"></i> 500+ Projects
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- About Company Section -->
+<section class="container mb-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+        <br><br><br>
+            <img src="{% static 'images/pexels-fauxels-3184360.jpg' %}" alt="Our Team" class="img-fluid rounded-3 shadow">
+        </div>
+        <div class="col-lg-6">
+            <h2 class="section-title text-start">Our Story</h2>
+            <p class="lead">LinkMeIn is a premier Training, Development, and Software Services company based in Hyderabad, India.</p>
+            <p>Founded in 2010, we have been at the forefront of delivering comprehensive Application Development & Managed Services, E-Commerce Solutions, BPO services, and Professional Training & Consulting Services. Our journey has been marked by continuous innovation and an unwavering commitment to excellence.</p>
+            <p>From maintaining existing applications to full life-cycle development of enterprise-wide business solutions, our technical teams across India deliver high-value solutions that drive business success.</p>
+            <div class="d-flex gap-3 mt-4">
+                <div class="flex-shrink-0">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="mb-1">Our Mission</h5>
+                    <p class="mb-0">To deliver innovative, reliable technology solutions that empower businesses to thrive in the digital age.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Promise Section -->
+<section class="container mb-5 py-5 bg-light rounded-3">
+    <div class="row align-items-center">
+        <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+            <img src="{% static 'images/ab.jpg' %}" alt="Our Promise" class="img-fluid rounded-3 shadow">
+        </div>
+        <div class="col-lg-6 order-lg-1">
+            <h2 class="section-title text-start">Our Promise</h2>
+            <blockquote class="blockquote fs-4 mb-4">
+                <p>"Designing Tomorrow Together"</p>
+            </blockquote>
+            <p>This philosophy reflects our commitment to building a better future through innovation and collaboration. We envision continuous growth and improvement as we expand our expertise across emerging technologies.</p>
+            <p>Our focus extends beyond immediate solutions to fostering long-term, sustainable relationships. We empower our employees to bring their best to each project, cultivating a culture of excellence and creativity that benefits our clients.</p>
+            <ul class="list-unstyled">
+                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Cutting-edge technology solutions</li>
+                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Client-centric approach</li>
+                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Sustainable business relationships</li>
+                <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Culture of innovation</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Key Stats Section -->
+<section class="container mb-5">
+    <h2 class="section-title">By The Numbers</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stats-item">
+                <div class="stats-number">2+</div>
+                <h5>Years Experience</h5>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-item">
+                <div class="stats-number">200+</div>
+                <h5>Satisfied Clients</h5>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-item">
+                <div class="stats-number">500+</div>
+                <h5>Projects Completed</h5>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-item">
+                <div class="stats-number">50+</div>
+                <h5>Expert Team</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Services Section -->
+<section class="container mb-5">
+    <h2 class="section-title">Our Core Services</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="about-card p-4 h-100">
+                <div class="feature-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>Software Development</h3>
+                <p>Custom application development tailored to your business needs, from web apps to enterprise solutions.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="about-card p-4 h-100">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Professional Training</h3>
+                <p>Comprehensive training programs in cutting-edge technologies to build your team's capabilities.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="about-card p-4 h-100">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Managed Services</h3>
+                <p>Ongoing support and maintenance to keep your systems running smoothly and efficiently.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="container mb-5">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="testimonial-card h-100">
+                <p>"LinkMeIn transformed our outdated systems into a modern, efficient platform that has significantly improved our operational efficiency."</p>
+                <div class="d-flex align-items-center mt-4">
+                    <img src="{% static 'images/client1.jpg' %}" alt="Client" class="client-img">
+                    <div>
+                        <h5 class="mb-1">Rajesh Kumar</h5>
+                        <p class="text-muted mb-0">CEO, TechSolutions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="testimonial-card h-100">
+                <p>"The training program was exceptional. Our team gained practical skills they could immediately apply to our projects."</p>
+                <div class="d-flex align-items-center mt-4">
+                    <img src="{% static 'images/client2.jpg' %}" alt="Client" class="client-img">
+                    <div>
+                        <h5 class="mb-1">Priya Sharma</h5>
+                        <p class="text-muted mb-0">CTO, InnovateIT</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="testimonial-card h-100">
+                <p>"Their managed services have been invaluable in maintaining our critical systems with minimal downtime."</p>
+                <div class="d-flex align-items-center mt-4">
+                    <img src="{% static 'images/client3.jpg' %}" alt="Client" class="client-img">
+                    <div>
+                        <h5 class="mb-1">Amit Patel</h5>
+                        <p class="text-muted mb-0">Director, Global Systems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="container mb-5">
+    <div class="bg-primary text-white rounded-3 p-5 text-center">
+        <h2 class="mb-4">Ready to Transform Your Business?</h2>
+        <p class="lead mb-4">Let's discuss how we can help you achieve your goals with our technology solutions.</p>
+        <a href="/contact/" class="btn btn-light btn-lg px-4">Contact Us Today</a>
+    </div>
+</section>
+
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="profileModalLabel">Profile Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h2>Welcome, {{ user.username }}</h2>
+                <p>Email: {{ user.email }}</p>
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
